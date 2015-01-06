@@ -4,25 +4,20 @@ let randomNumber k =
 	Random.int ( k ) + 1
 ;;
 
-let rec generaOggetti (n, p, lista) =
-	if n = 0 then
-		lista
-	else
-		generaOggetti ((n-1), p, (randomNumber p, randomNumber 10)::lista)
+let generaOggetti numeroOggetti pesoMassimo = 
+	let rec generazione (n, lista) =
+		if n = 0 then
+			lista
+		else
+			generazione ((n-1), (randomNumber pesoMassimo, randomNumber 10)::lista)
+	in generazione (numeroOggetti, [])
 ;;
 
 
 let rec print_list = function 
 	[] -> ()
-	| (peso, valore)::l ->  print_string "(" ; print_int peso ; print_string ", " ; print_int valore ; print_string ")" ; print_string " " ; print_list l
+	| (peso, valore)::coda ->  print_string "(" ; print_int peso ; print_string ", " ; print_int valore ; print_string ")" ; print_string " " ; print_list coda
 ;;
-
-(* let succ p_temp p_max lista =
-	match lista with
-	[] -> [[]; []]
-	| (v,p)::coda -> if p_temp + p > p_max then [[]; coda]
-					else [lista; coda]
-;; *)
 
 let rec costocammino = function
 	[] -> 0
@@ -50,26 +45,12 @@ let main =
 	print_string "Peso massimo zaino: " ; 
 	let pesoMassimo = read_int()
 in 
-	let listaf = generaOggetti (numeroOggetti, pesoMassimo, []) in
+	let listaf =  generaOggetti numeroOggetti pesoMassimo
+in
 	print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list listaf ; print_newline() ;
-	print_list (searchbb pesoMassimo listaf) ;
-	print_newline()
-	
-	(* print_endline (string_of_int (costocammino listaf)) (*test funzione costocammino*) *)
-	(* List.map print_list (succ 10 10 listaf) (*test succ*) *)
+	let soluzione = searchbb pesoMassimo listaf 
+in
+	print_string "Soluzione: " ; print_newline() ; 
+	print_list soluzione ; print_newline() ; 
+	print_string "Valore totale oggetti: " ; print_int (costocammino soluzione) ; print_newline()
 ;;
-
-
-(*
-let searchbb inizio fine listaf  =
-	let estendi cammino = 
-		List.map (function x -> x::cammino)
-			(List.filter (function x -> not (List.mem x cammino)) (succ (List.hd cammino)))
-	in 
-				in let rec search_aux fine = function
-					[] -> raise NotFound
-					| cammino::rest -> if fine = List.hd cammino then List.rev cammino
-									   else search_aux fine (List.sort confronta (rest @ (estendi cammino)))
-	in search_aux fine [[inizio]]
-;;
-*)
