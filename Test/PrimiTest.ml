@@ -4,16 +4,6 @@ let randomNumber k =
 	Random.int ( k ) + 1
 ;;
 
-let generaOggetti numeroOggetti pesoMassimo = 
-	let rec generazione (n, lista) =
-		if n = 0 then
-			lista
-		else
-			generazione ((n-1), (randomNumber pesoMassimo, randomNumber 10)::lista)
-	in generazione (numeroOggetti, [])
-;;
-
-
 let rec print_list = function 
 	[] -> ()
 	| (peso, valore)::coda ->  print_string "(" ; print_int peso ; print_string ", " ; print_int valore ; print_string ")" ; print_string " " ; print_list coda
@@ -31,7 +21,17 @@ let confronta c1 c2 =
 			   else c2
 ;;
 
+let generaOggetti numeroOggetti pesoMassimo = 
+	let rec generazione (n, lista) =
+		if n = 0 then
+			lista
+		else
+			generazione ((n-1), (randomNumber pesoMassimo, randomNumber 10)::lista)
+	in generazione (numeroOggetti, [])
+;;
+
 let searchbb pesoMassimo listaf = 
+	print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list listaf ; print_newline() ;
 	let rec search_aux p_temp = function
 					[] -> []
 					| (p,v)::coda -> if p_temp + p > pesoMassimo then search_aux p_temp coda
@@ -43,14 +43,28 @@ let main =
 	print_string "Numero oggetti: " ; 
 	let numeroOggetti = read_int() in
 	print_string "Peso massimo zaino: " ; 
-	let pesoMassimo = read_int()
-in 
-	let listaf =  generaOggetti numeroOggetti pesoMassimo
-in
-	print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list listaf ; print_newline() ;
-	let soluzione = searchbb pesoMassimo listaf 
+	let pesoMassimo = read_int() in
+	let soluzione = searchbb pesoMassimo (generaOggetti numeroOggetti pesoMassimo)
 in
 	print_string "Soluzione: " ; print_newline() ; 
 	print_list soluzione ; print_newline() ; 
 	print_string "Valore totale oggetti: " ; print_int (costocammino soluzione) ; print_newline()
 ;;
+
+
+(* let main =
+	print_string "Numero oggetti: " ; 
+	let numeroOggetti = read_int() in
+	print_string "Peso massimo zaino: " ; 
+	let pesoMassimo = read_int()
+in 
+	let listaf =  generaOggetti numeroOggetti pesoMassimo 
+in
+	print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list listaf ; print_newline() ;
+	let soluzione = searchbb pesoMassimo listaf //fare che passo funzione genera lista invece della lista
+in
+	print_string "Soluzione: " ; print_newline() ; 
+	print_list soluzione ; print_newline() ; 
+	print_string "Valore totale oggetti: " ; print_int (costocammino soluzione) ; print_newline()
+;;
+ *)
