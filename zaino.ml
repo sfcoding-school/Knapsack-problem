@@ -45,13 +45,13 @@ let confronta c1 c2 =
 
 	All'inizio dell'esecuzione di searchbb viene stampata la lista degli oggetti dati, è un operazione non utile ai fini dell'esecuzione
 *)
-let searchbb pesoMassimo listaf = 
+let zainobb pesoMassimo listaf = 
 	print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list listaf ; print_newline() ;
-	let rec search_aux p_temp = function
+	let rec zaino_aux p_temp = function
 					[] -> []
-					| (p,v)::coda -> if p_temp + p > pesoMassimo then search_aux p_temp coda
-									 else confronta (search_aux p_temp coda) ((p,v)::(search_aux (p_temp + p) coda))
-	in search_aux 0 listaf
+					| (p,v)::coda -> if p_temp + p > pesoMassimo then zaino_aux p_temp coda
+									 else confronta (zaino_aux p_temp coda) ((p,v)::(zaino_aux (p_temp + p) coda))
+	in zaino_aux 0 listaf
 ;;  
 
 (* Il main serve semplicemente per richiedere all'utente il numero di oggetti dello zaino e il peso massimo dello zaino 
@@ -65,7 +65,7 @@ let main =
 	let numeroOggetti = read_int() in
 	print_string "Peso massimo zaino: " ; 
 	let pesoMassimo = read_int() in
-	let soluzione = searchbb pesoMassimo (generaOggetti numeroOggetti pesoMassimo)
+	let soluzione = zainobb pesoMassimo (generaOggetti numeroOggetti pesoMassimo)
 in
 	print_string "Soluzione: " ; print_newline() ; 
 	print_list soluzione ; print_newline() ; 
