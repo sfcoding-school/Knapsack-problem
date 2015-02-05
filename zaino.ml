@@ -21,6 +21,18 @@ let rec print_list = function
 	| (peso, valore)::coda ->  print_string "(" ; print_int peso ; print_string ", " ; print_int valore ; print_string ")" ; print_string " " ; print_list coda
 ;;
 
+(* Stampa ricorsivamente la lista e si somma il valore totale degli oggetti presi, stamperà poi tale valore alla fine della lista*)
+let stampa_soluzione sol = 
+	print_string "Lista oggetti presi: " ; print_newline() ; 
+	let rec stampa_lista valFinale lista = 
+		match lista with
+		| [] -> print_newline() ; print_string "Valore totale oggetti presi: " ; print_int valFinale ; print_newline()
+		| (peso, valore)::coda ->  print_string "(" ; print_int peso ; print_string ", " ; print_int valore ; print_string ")" ; print_string " " ;
+		 stampa_lista (valFinale + valore) coda
+	in stampa_lista 0 sol
+;;
+
+
 (* calcola ricorsivamente la somma dei valori dei nodi *)
 let rec costocammino = function
 	[] -> 0
@@ -60,14 +72,15 @@ let zainobb pesoMassimo listaf =
 
 	Infine viene stampata la soluzione come lista di oggetti scelti e il valore totale di questi
 *)
+(*
 let main =
 	print_string "Numero oggetti: " ; 
 	let numeroOggetti = read_int() in
 	print_string "Peso massimo zaino: " ; 
 	let pesoMassimo = read_int() in
-	let soluzione = zainobb pesoMassimo (generaOggetti numeroOggetti pesoMassimo)
-in
-	print_string "Soluzione: " ; print_newline() ; 
-	print_list soluzione ; print_newline() ; 
-	print_string "Valore totale oggetti: " ; print_int (costocammino soluzione) ; print_newline()
+	stampa_soluzione (zainobb pesoMassimo (generaOggetti numeroOggetti pesoMassimo))
 ;;
+*)
+
+(* Esempio funzionamento *)
+stampa_soluzione (zainobb 20 (generaOggetti 10 20));;
