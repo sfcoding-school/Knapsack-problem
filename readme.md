@@ -15,4 +15,4 @@ Il Problema dello zaino, detto anche Knapsack problem, è un problema di ottimiz
 In particolare vediamo la definizione formale del problema dello zaino 0-1, ovvero un oggetto lo si può o prendere o meno, ma non lo si può "spezzare"
 Dati n oggetti con valore "v" e peso "p" si vuole massimizzare:
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=%5Csum_%7Bi%3D1%7D%5E%7Bn%7Dv_i%20x_i&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0) con vincoli ![equation](http://www.sciweavers.org/tex2img.php?eq=%5Csum_%7Bi%3D1%7D%5E%7Bn%7Dp_i%20x_i%20%5Cleq%20P%2C%20%5C%3B%5C%3B%5C%3B%5C%3B%20x_i%20%5Cin%20%5C%7B0%2C1%5C%7D&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![equation](http://bit.ly/16uSZhU) con vincoli ![equation](http://bit.ly/1LQrLD2)
