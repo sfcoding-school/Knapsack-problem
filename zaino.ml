@@ -1,3 +1,5 @@
+(* Coro' Federico - 276964 *)
+
 Random.self_init();; (* inizializza il generatore per il Random *)
 
 let randomNumber k = 
@@ -54,21 +56,18 @@ let confronta c1 c2 =
 	In pratica si controlla se aggiungendo il nuovo peso al vecchio esso supera il peso massimo, se si, quel nodo non viene preso in considerazione
 	in caso contrario si confronterà tra la soluzione ottima trovata escluso quel nodo e la soluzione ottima compreso quel nodo e quindi in questo secondo
 	caso p_temp dovrà essere incrementato del peso del nodo attuale 
-
-	All'inizio dell'esecuzione di zainobb viene stampata la lista degli oggetti dati, è un operazione non utile ai fini dell'esecuzione
 *)
 let zainobb pesoMassimo listaf = 
-	print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list listaf ; print_newline() ;
 	let rec zaino_aux p_temp = function
-					[] -> []
-					| (p,v)::coda -> if p_temp + p > pesoMassimo then zaino_aux p_temp coda
-									 else confronta (zaino_aux p_temp coda) ((p,v)::(zaino_aux (p_temp + p) coda))
+		[] -> []
+		| (p,v)::coda -> if p_temp + p > pesoMassimo then zaino_aux p_temp coda
+							else confronta (zaino_aux p_temp coda) ((p,v)::(zaino_aux (p_temp + p) coda))
 	in zaino_aux 0 listaf
 ;;  
 
-(* Il main serve semplicemente per richiedere all'utente il numero di oggetti dello zaino e il peso massimo dello zaino 
-	verrà poi richiamata la funzione zainobb, a questa come secondo paramentro gli passiamo la funzione che genera la lista
-	Infine viene stampata la soluzione come lista di oggetti scelti e il valore totale di questi
+(* Il main serve per richiedere all'utente il numero di oggetti dello zaino e il peso massimo dello zaino 
+	viene poi creata la lista tramite la funzione generaOggetti, questa verrà poi stampata e passata alla funzione
+	zainobb che provvederà a cercare la soluzione al problema
 *)
 (*
 let main =
@@ -76,11 +75,16 @@ let main =
 	let numeroOggetti = read_int() in
 	print_string "Peso massimo zaino: " ; 
 	let pesoMassimo = read_int() in
-	stampa_soluzione (zainobb pesoMassimo (generaOggetti numeroOggetti pesoMassimo))
+	let lista = generaOggetti numeroOggetti pesoMassimo in 
+		print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list lista ; print_newline() ;
+		stampa_soluzione (zainobb pesoMassimo lista)
 ;;
 *)
 
-(* Esempio funzionamento
-	Si ha la funzione stampa_soluzione a cui si passa la funzione zainobb a cui a sua volta vengono passati un valore e la funzione che genererà la lista
+(* ESEMPIO funzionamento
+	creaiamo prima la lista degli oggetti tramite la funzione generaOggetti, questa verrà poi stampata e passata alla funzione zainobb,
+	la soluzione verrà presa come parametro dalla funzione stampa_soluzione che stamperà a schermo la lista degli oggetti presi e il valore
 *)
-stampa_soluzione (zainobb 20 (generaOggetti 10 20));;
+let listaEsempio = generaOggetti 10 20;;
+print_endline "Lista degli oggetti possibili in coppia (peso, valore)" ; print_list listaEsempio ; print_newline() ;
+stampa_soluzione (zainobb 20 listaEsempio);;
